@@ -54,8 +54,8 @@ function App() {
 				</div>
 			</div>
 		 </Route>
-		 <Route path="/detail">
-			<Detail/>
+		 <Route path="/detail/:id">
+			<Detail shoes = {shoes}/>
 		 </Route>
 		 <Route path="/:id">
 		 	<div>아무거나</div>
