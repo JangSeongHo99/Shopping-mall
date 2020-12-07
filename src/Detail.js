@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import { useHistory, useParams } from 'react-router-dom';
+import './Detail.scss'
 
 function Detail(props){
 	
@@ -11,12 +12,15 @@ function Detail(props){
 	
 	for(let shoe of props.shoes) {
 		if (shoe.id == id) {
-			match = shoe.id;
+			match = shoe.id; 
 			break;
 		}
 	}
 	return(
 		<div className="container">
+			<div className="my-alert2">
+				<p>재고가 얼마 남지 않았습니다</p>
+			</div>
 			<div className="row">
 				<div className="col-md-6">
 					<img src={"https://codingapple1.github.io/shop/shoes"+(match+1)+".jpg"} width="100%"/>
