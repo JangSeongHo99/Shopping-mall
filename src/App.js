@@ -10,7 +10,7 @@ import { Link,Route,Switch } from 'react-router-dom';
 function App() {
 	
 	let [shoes, shoes변경] = useState(Data);
-	
+	let [alert, alert변경] = useState(true);
   return (
     <div className="App">
 		<Navbar bg="light" expand="lg">
@@ -54,17 +54,17 @@ function App() {
 					}
 				</div>
 				<button className="btn btn-primary" onClick={()=>{
+												return (
+							<Alerta></Alerta>
+						)
 						axios.get('https://codingapple1.github.io/shop/data2.json')
 						.then((result)=>{
-							let tempArray = [...shoes];
-							result.data.map((data)=>{
-								tempArray.unshift(data)
-							})
-							console.log(tempArray);
-							shoes변경(tempArray);
+							alert변경(false);
+							shoes변경([...shoes, ...result.data])
 						})
 						.catch(()=>{
-							console.log('실패')
+							alert변경(false);
+							console.log('실패');
 						})
 					}}>더보기</button>
 			</div>
@@ -86,6 +86,14 @@ function Shoes(props) {
 			<img src = {"https://codingapple1.github.io/shop/shoes"+(props.shoe.id+1)+".jpg"} width="100%"/>
 			<h4>{ props.shoe.title }</h4>
 			<p>{ props.shoe.content } & { props.shoe.price}</p>
+		</div>
+	)
+}
+
+function Alerta() {
+	return(
+		<div className="my-alert">
+			<p>재고가 얼마 남지 않았습니다</p>
 		</div>
 	)
 }
