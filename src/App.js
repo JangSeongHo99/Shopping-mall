@@ -1,8 +1,9 @@
-	import './App.css';
+import './App.css';
 import { Navbar,Nav,NavDropdown,Button,Jumbotron } from 'react-bootstrap';
 import React, {useState} from 'react';
 import Data from "./data.js";
 import Detail from "./Detail.js"
+import axios from 'axios';
 
 import { Link,Route,Switch } from 'react-router-dom';
 
@@ -52,6 +53,20 @@ function App() {
 						)
 					}
 				</div>
+				<button className="btn btn-primary" onClick={()=>{
+						axios.get('https://codingapple1.github.io/shop/data2.json')
+						.then((result)=>{
+							let tempArray = [...shoes];
+							result.data.map((data)=>{
+								tempArray.unshift(data)
+							})
+							console.log(tempArray);
+							shoes변경(tempArray);
+						})
+						.catch(()=>{
+							console.log('실패')
+						})
+					}}>더보기</button>
 			</div>
 		 </Route>
 		 <Route path="/detail/:id">
