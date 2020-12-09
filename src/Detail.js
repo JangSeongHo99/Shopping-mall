@@ -1,8 +1,14 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import './Detail.scss'
 
 function Detail(props){
+	let [alert, alert변경] = useState(true);
+	
+	useEffect(()=> {
+		let 타이머 = setTimeout(()=>{alert변경(false)}, 2000);
+		return ()=>{ clearTimeout(타이머) }
+	}, [])
 	
 	let { id } = useParams();
 	let history = useHistory();
@@ -18,9 +24,11 @@ function Detail(props){
 	}
 	return(
 		<div className="container">
-			<div className="my-alert2">
-				<p>재고가 얼마 남지 않았습니다</p>
-			</div>
+			{
+				alert === true
+				? <Alert/>
+				: null
+			}
 			<div className="row">
 				<div className="col-md-6">
 					<img src={"https://codingapple1.github.io/shop/shoes"+(match+1)+".jpg"} width="100%"/>
@@ -40,4 +48,11 @@ function Detail(props){
 	)
 }
 
+function Alert() {
+	return (
+		<div className="my-alert2">
+			<p>재고가 얼마 남지 않았습니다</p>
+		</div>
+	)
+}
 export default Detail;
