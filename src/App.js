@@ -8,9 +8,8 @@ import axios from 'axios';
 import { Link,Route,Switch } from 'react-router-dom';
 
 function App() {
-	
 	let [shoes, shoes변경] = useState(Data);
-	let [alert, alert변경] = useState(true);
+	let [alert, alert변경] = useState(false);
   return (
     <div className="App">
 		<Navbar bg="light" expand="lg">
@@ -53,10 +52,13 @@ function App() {
 						)
 					}
 				</div>
+				{
+					alert === true
+					? <Alerta/>
+						: null
+				}
 				<button className="btn btn-primary" onClick={()=>{
-												return (
-							<Alerta></Alerta>
-						)
+						alert변경(true);
 						axios.get('https://codingapple1.github.io/shop/data2.json')
 						.then((result)=>{
 							alert변경(false);
@@ -92,7 +94,7 @@ function Shoes(props) {
 
 function Alerta() {
 	return(
-		<div className="my-alert">
+		<div className="my-alert3">
 			<p>재고가 얼마 남지 않았습니다</p>
 		</div>
 	)
