@@ -1,15 +1,19 @@
 import './App.css';
 import { Navbar,Nav,NavDropdown,Button,Jumbotron } from 'react-bootstrap';
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
 import Data from "./data.js";
 import Detail from "./Detail.js"
 import axios from 'axios';
 
 import { Link,Route,Switch } from 'react-router-dom';
 
+import Cart from './Cart.js'
+let 재고context = React.createContext();
+
 function App() {
 	let [shoes, shoes변경] = useState(Data);
 	let [alert, alert변경] = useState(false);
+	let [재고, 재고변경] = useState([10, 11, 12]);
   return (
     <div className="App">
 		<Navbar bg="light" expand="lg">
@@ -42,6 +46,7 @@ function App() {
 			  </p>
 			</Jumbotron>
 			<div className="container">
+				<재고context.Provider value = {재고}>
 				<div className="row">
 					{
 						shoes.map((shoe, index)=>{
@@ -52,6 +57,7 @@ function App() {
 						)
 					}
 				</div>
+				</재고context.Provider>		
 				{
 					alert === true
 					? <Alerta/>
@@ -72,8 +78,12 @@ function App() {
 			</div>
 		 </Route>
 		 <Route path="/detail/:id">
-			<Detail shoes = {shoes}/>
+			<Detail shoes = {shoes} 재고 = {재고} 재고변경 = {재고변경}/>
 		 </Route>
+			
+		<Route path="/cart">
+			<Cart></Cart>
+		</Route>
 		 <Route path="/:id">
 		 	<div>아무거나</div>
 		  </Route>
@@ -83,6 +93,9 @@ function App() {
 }
 
 function Shoes(props) {
+	
+	let 재고 = useContext(재고context);
+	
 	return(
 		<div className="col-md-4">
 			<img src = {"https://codingapple1.github.io/shop/shoes"+(props.shoe.id+1)+".jpg"} width="100%"/>
@@ -92,6 +105,10 @@ function Shoes(props) {
 	)
 }
 
+function Test() {
+	let 재고 = useContext(재고context);
+	return <p>재고 : ???</p>
+}
 function Alerta() {
 	return(
 		<div className="my-alert3">
