@@ -14,13 +14,19 @@ function Cart(props) {
       </tr>
     </thead>
     <tbody>
-      <tr>
-        <td>1</td>
-        <td>{ props.state[0].name }</td>
-        <td>Table cell</td>
-        <td>Table cell</td>
-        <td>Table cell</td>
-      </tr>
+		{
+			props.state.map((a, i)=>{
+				return (
+					<tr>
+						<td>{a.id}</td>
+						<td>{a.name}</td>
+						<td>{a.quan}</td>
+						<td><button onClick={()=>{ props.dispatch( { type : '증가'})}}>+</button></td>
+						<td><button onClick={()=>{ props.dispatch( { type : '감소'})}}>-</button></td>
+					</tr>
+				)
+			})
+		}
     </tbody>
   </Table>
 </div>
